@@ -24,7 +24,6 @@
       this.clear();
       var hash = window.location.hash;
       var a = hash.split('/');
-      console.log(a);
       if (a.length === 2) {
         switch (a[0]) {
           case '#gid':
@@ -67,16 +66,28 @@
       window.location.hash = hash;
     },
     searchByGID: function(keyword) {
+
+      this.setState({
+        searching: true
+      });
       var ref = this.guildRef.child(keyword);
       ref.once('value', this.handleSnapshot);
       this.searchingRefs.push(ref);
     },
     searchByGuildName: function(keyword) {
+
+      this.setState({
+        searching: true
+      });
       var ref = this.guildRef.orderByChild('name').equalTo(keyword);
       ref.on('child_added', this.handleSnapshot);
       this.searchingRefs.push(ref);
     },
     searchByUserName: function(keyword) {
+
+      this.setState({
+        searching: true
+      });
       var ref = this.userRef.orderByChild('name').equalTo(keyword);
       ref.once('value', this.handleSnapshot);
       this.searchingRefs.push(ref);
@@ -93,7 +104,6 @@
       }
     },
     handleSnapshot: function(snapshot) {
-      console.log(snapshot.ref());
       var data = snapshot.val();
       if (!data) {
         this.setState({
@@ -122,7 +132,7 @@
         ref.off('value', this.handleSnapshot);
       }, this);
       this.setState({
-        searching: true,
+        searching: false,
         results: []
       });
       this.store = [];
@@ -156,9 +166,11 @@
 
       var footer = '';
       if (this.state.results.length > 0) {
-        footer = <div className="myfooter container">
-                  <div>Granblue Fantasy: Copyright@Cygames, Inc</div>
-                  <div>Database powered by: <a className="btn btn-link" href="lhttp://github.com/alivedise" >Alive</a></div>
+        footer = <div className="myfooter panel-footer">
+                  <div className="well well-sm">
+                    Granblue Fantasy: Copyright@Cygames, Inc<br/>
+                    Database powered by: <a className="btn btn-link" href="lhttp://github.com/alivedise" >Alive</a>
+                  </div>
                 </div>
       } else if (this.state.searching) {
         dom = <div className="form-group">
@@ -166,7 +178,7 @@
                       <span className="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span>
                     </div>
                   </div>;
-      } else {
+      } else if (window.location.hash) {
         dom = <div className="alert alert-danger" role="alert">No data, please search again.</div>
       }
       return <div>

@@ -26,7 +26,6 @@
       this.clear();
       var hash = window.location.hash;
       var a = hash.split('/');
-      console.log(a);
       if (a.length === 2) {
         switch (a[0]) {
           case '#gid':
@@ -69,16 +68,28 @@
       window.location.hash = hash;
     },
     searchByGID: function searchByGID(keyword) {
+
+      this.setState({
+        searching: true
+      });
       var ref = this.guildRef.child(keyword);
       ref.once('value', this.handleSnapshot);
       this.searchingRefs.push(ref);
     },
     searchByGuildName: function searchByGuildName(keyword) {
+
+      this.setState({
+        searching: true
+      });
       var ref = this.guildRef.orderByChild('name').equalTo(keyword);
       ref.on('child_added', this.handleSnapshot);
       this.searchingRefs.push(ref);
     },
     searchByUserName: function searchByUserName(keyword) {
+
+      this.setState({
+        searching: true
+      });
       var ref = this.userRef.orderByChild('name').equalTo(keyword);
       ref.once('value', this.handleSnapshot);
       this.searchingRefs.push(ref);
@@ -95,7 +106,6 @@
       }
     },
     handleSnapshot: function handleSnapshot(snapshot) {
-      console.log(snapshot.ref());
       var data = snapshot.val();
       if (!data) {
         this.setState({
@@ -124,7 +134,7 @@
         ref.off('value', this.handleSnapshot);
       }, this);
       this.setState({
-        searching: true,
+        searching: false,
         results: []
       });
       this.store = [];
@@ -190,15 +200,12 @@
       if (this.state.results.length > 0) {
         footer = React.createElement(
           'div',
-          { className: 'myfooter container' },
+          { className: 'myfooter panel-footer' },
           React.createElement(
             'div',
-            null,
-            'Granblue Fantasy: Copyright@Cygames, Inc'
-          ),
-          React.createElement(
-            'div',
-            null,
+            { className: 'well well-sm' },
+            'Granblue Fantasy: Copyright@Cygames, Inc',
+            React.createElement('br', null),
             'Database powered by: ',
             React.createElement(
               'a',
@@ -217,7 +224,7 @@
             React.createElement('span', { className: 'glyphicon glyphicon-refresh glyphicon-refresh-animate' })
           )
         );
-      } else {
+      } else if (window.location.hash) {
         dom = React.createElement(
           'div',
           { className: 'alert alert-danger', role: 'alert' },

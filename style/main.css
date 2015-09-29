@@ -104,6 +104,8 @@ div.graph {
 }
 
 .myfooter {
-  color: white;
   background: url('img/header.jpg') bottom center no-repeat;
+}
+.myfooter > div {
+  opacity: 0.7;
 }
