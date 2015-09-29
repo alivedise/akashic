@@ -1,0 +1,109 @@
+/*
+div.hero::after {
+  content: "";
+  background: url('img/header.jpg') top center no-repeat;
+  opacity: 0.3;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  position: absolute;
+  z-index: -1;   
+}*/
+
+div.hero {
+  background: url('img/header.jpg') top center no-repeat;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
+div.hero h1,
+div.hero h2 {
+  color: white;
+}
+
+#results {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+
+/*
+    Original version: http://www.bootply.com/128062
+    
+    This version adds support for IE 10+ and Firefox.
+*/
+
+.glyphicon-refresh-animate {
+    -animation: spin .7s infinite linear;
+    -ms-animation: spin .7s infinite linear;
+    -webkit-animation: spinw .7s infinite linear;
+    -moz-animation: spinm .7s infinite linear;
+}
+
+@keyframes spin {
+    from { transform: scale(1) rotate(0deg);}
+    to { transform: scale(1) rotate(360deg);}
+}
+  
+@-webkit-keyframes spinw {
+    from { -webkit-transform: rotate(0deg);}
+    to { -webkit-transform: rotate(360deg);}
+}
+
+@-moz-keyframes spinm {
+    from { -moz-transform: rotate(0deg);}
+    to { -moz-transform: rotate(360deg);}
+}
+
+
+
+path {
+  stroke: DodgerBlue;
+  stroke-width: 1;
+  fill: none;
+}
+.axis {
+  font-size: 11px;
+  fill: gray;
+}
+
+.x.axis line {
+  stroke: lightgrey;
+}
+
+.x.axis .minor {
+  stroke-opacity: .5;
+}
+
+.x.axis path {
+  stroke: #fafafa;
+}
+
+.y.axis line, .y.axis path {
+  fill: none;
+  stroke: lightgrey;
+}
+
+img.pc {
+  position: absolute;
+  left: -12px;
+  bottom: 0;
+  width: 150px;
+}
+
+.pc-item {
+  padding-left: 130px;
+  background-size: 600px;
+  background-repeat: no-repeat;
+  background-position: calc(100% + 300px) -50px;
+}
+
+div.graph {
+  text-align: right
+}
+
+.myfooter {
+  color: white;
+  background: url('img/header.jpg') bottom center no-repeat;
+}
