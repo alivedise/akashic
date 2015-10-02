@@ -217,6 +217,7 @@
                 <div className="container">
                   <div className="list-group">
                     {dom}
+                    "Database under maintenance"
                   </div>
                 </div>
               </div>

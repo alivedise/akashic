@@ -299,7 +299,8 @@
             React.createElement(
               'div',
               { className: 'list-group' },
-              dom
+              dom,
+              '"Database under maintenance"'
             )
           )
         ),
