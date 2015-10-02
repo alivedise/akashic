@@ -38,6 +38,10 @@
             document.getElementById('keyword').value = 'user/' + a[1];
             this.searchByUserName(a[1]);
             break;
+          case '#uid':
+            document.getElementById('keyword').value = 'uid/' + a[1];
+            this.searchByUID(a[1]);
+            break;
           case '#search':
             document.getElementById('keyword').value = a[1];
             this.search(a[1]);
@@ -58,6 +62,8 @@
         hash = '#' + keyword;
       } else if (keyword.match(/guild\/(.)*/)) {
         hash = '#' + keyword;
+      } else if (keyword.match(/uid\/(.)*/)) {
+        hash = '#' + keyword;
       } else if (keyword.match(/user\/(.)*/)) {
         hash = '#' + keyword;
       } else {
@@ -71,6 +77,15 @@
         searching: true
       });
       var ref = this.guildRef.child(keyword);
+      ref.once('value', this.handleSnapshot);
+      this.searchingRefs.push(ref);
+    },
+
+    searchByUID: function(keyword) {
+      this.setState({
+        searching: true
+      });
+      var ref = this.userRef.child(keyword);
       ref.once('value', this.handleSnapshot);
       this.searchingRefs.push(ref);
     },
@@ -113,10 +128,17 @@
         return;
       }
       if (!data.members) {
-        for (var k in data) {
-          var ref = this.guildRef.child(data[k].gid);
+        console.log(data);
+        if (data.gid) {
+          var ref = this.guildRef.child(data.gid);
           ref.once('value', this.handleSnapshot);
           this.searchingRefs.push(ref);
+        } else {
+          for (var k in data) {
+            var ref = this.guildRef.child(data[k].gid);
+            ref.once('value', this.handleSnapshot);
+            this.searchingRefs.push(ref);
+          }
         }
       } else { 
         this.store.push(data);
